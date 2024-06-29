@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-public class DistributedCache<K, V> implements Cache<K, V> {
+public class DistributedCache<K,V> implements Cache<V> {
     private int numberOfNodes;
     private int numberOfReplicas;
     private int prefetchSize;
@@ -28,6 +28,7 @@ public class DistributedCache<K, V> implements Cache<K, V> {
                             int numberOfNodes,
                             int numberOfReplicas,
                             int prefetchSize,
+                            int limit,
                             DatabaseAdapter<K, V> database) {
         this.numberOfNodes = numberOfNodes;
         this.numberOfReplicas = numberOfReplicas;
@@ -37,24 +38,24 @@ public class DistributedCache<K, V> implements Cache<K, V> {
         this.database = database;
         List<CacheNode> cacheNodes = new ArrayList<>();
         for (int i = 0; i < numberOfNodes; ++i) {
-            cacheNodes.add(new CacheNode(this.evictionStrategy));
+            cacheNodes.add(new CacheNode(this.evictionStrategy, limit));
         }
         this.consistentHashing = new ConsistentHashing(numberOfReplicas, cacheNodes);
     }
 
     @Override
-    public Future<V> get(K key) {
+    public Future<V> get(String key) {
         return null;
     }
 
     @Override
-    public Future<Void> put(K key, V value) {
+    public Future<Void> put(String key, V value) {
         return null;
     }
 
     @Override
-    public Future<Void> remove(K key) {
-        CacheNode cacheNode = consistentHashing.get(String.valueOf(key));
+    public Future<Void> remove(String key) {
+        CacheNode cacheNode = consistentHashing.get(key);
 
         if (cacheNode != null) {
             return cacheNode.remove(key);

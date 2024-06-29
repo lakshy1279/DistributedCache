@@ -2,15 +2,15 @@ package com.scaler.distributedcache.evictionstrategies;
 
 import com.scaler.distributedcache.CacheOperation;
 
-public class LfuEvictionStrategy<K> implements IEvictionStrategy<K> {
+public class LfuEvictionStrategy implements IEvictionStrategy {
 
     @Override
-    public void notify(K key, CacheOperation operation) {
+    public void notify(String key, CacheOperation operation) {
 
     }
 
     @Override
-    public K evict() {
+    public String evict() {
         return null;
     }
 }

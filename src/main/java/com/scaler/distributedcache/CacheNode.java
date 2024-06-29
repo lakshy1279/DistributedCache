@@ -7,14 +7,15 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-public class CacheNode<K, V> {
+public class CacheNode<V> {
     private int id;
-    private Map<K, V> cache;
+    private Map<String, V> cache;
     private IEvictionStrategy evictionStrategy;
-
-    public CacheNode(IEvictionStrategy evictionStrategy) {
+    private int limit;
+    public CacheNode(IEvictionStrategy evictionStrategy, int limit) {
         cache = new HashMap<>();
         this.evictionStrategy = evictionStrategy;
+        this.limit = limit;
     }
 
     public int getId() {
@@ -22,15 +23,15 @@ public class CacheNode<K, V> {
     }
 
 
-    public Future<V> get(K key) {
+    public Future<V> get(String key) {
         return null;
     }
 
-    public Future<Void> put(K key, V value) {
+    public Future<Void> put(String key, V value) {
         return null;
     }
 
-    public Future<Void> remove(K key) {
+    public Future<Void> remove(String key) {
         cache.remove(key);
         evictionStrategy.notify(key, CacheOperation.DELETE);
         return CompletableFuture.completedFuture(null);

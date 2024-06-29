@@ -2,9 +2,9 @@ package com.scaler.distributedcache.evictionstrategies;
 
 import com.scaler.distributedcache.CacheOperation;
 
-public interface IEvictionStrategy<K> {
+public interface IEvictionStrategy {
 
-    void notify(K key, CacheOperation operation);
+    void notify(String  key, CacheOperation operation);
 
-    K evict();
+    String evict();
 }

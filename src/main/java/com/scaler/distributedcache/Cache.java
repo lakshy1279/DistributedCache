@@ -2,11 +2,11 @@ package com.scaler.distributedcache;
 
 import java.util.concurrent.Future;
 
-public interface Cache<K, V> {  // List<Integer>
+public interface Cache<V> {  // List<Integer>
 
-    Future<Void> put(K key, V value);
+    Future<Void> put(String key, V value);
 
-    Future<V> get(K key);
+    Future<V> get(String key);
 
-    Future<Void> remove(K key);
+    Future<Void> remove(String key);
 }
